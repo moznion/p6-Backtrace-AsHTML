@@ -3,9 +3,11 @@ use MONKEY-TYPING;
 
 unit class Backtrace::AsHTML;
 
+my constant $P6HOME = $*VM.prefix ~ '/..';
+
 augment class Backtrace {
-    method as-html(*%opt) {
-        say render(self, %opt);
+    method as-html(*%opt) returns Str {
+        return render(self, %opt);
     }
 };
 
@@ -63,8 +65,6 @@ my sub render(Backtrace $bt, %opt) returns Str {
 
     my $i = 0;
     for @$traces -> Backtrace::Frame $frame {
-        say $frame.my;
-
         $i++;
         my Backtrace::Frame $next-frame = $traces[$i]; # peek next
 
@@ -90,8 +90,13 @@ my sub render(Backtrace $bt, %opt) returns Str {
 }
 
 my sub build-context(Backtrace::Frame $frame) returns Str {
-    my $file    = $frame.file;
+    my $file = $frame.file;
     my $linenum = $frame.line;
+
+    unless $file.IO.f {
+        # maybe runtime file
+        $file = "$P6HOME/$file";
+    }
 
     my Str $code;
     if $file.IO.f {
