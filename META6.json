@@ -1,0 +1,16 @@
+{
+  "name" : "Backtrace::AsHTML",
+  "source-url" : "",
+  "perl" : "v6",
+  "build-depends" : [ ],
+  "provides" : {
+    "Backtrace::AsHTML" : "lib/Backtrace/AsHTML.pm6"
+  },
+  "depends" : [ ],
+  "description" : "blah blah blah",
+  "test-depends" : [ ],
+  "version" : "*",
+  "authors" : [
+    "moznion"
+  ]
+}
