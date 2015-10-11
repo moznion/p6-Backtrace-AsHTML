@@ -107,20 +107,17 @@ my sub build-context(Backtrace::Frame $frame) returns Str {
         my $fh = try { open $file, :bin } or die "cannot open $file: $!";
         my $cur-line = 0;
 
-        unless $fh.eof {
-            loop {
-                my Str $line = $fh.get;
-                last if $fh.eof;
-                ++$cur-line;
+        my @lines = $fh.lines;
+        for @lines -> $line {
+            ++$cur-line;
 
-                last if $cur-line > $end;
-                next if $cur-line < $start;
+            last if $cur-line > $end;
+            next if $cur-line < $start;
 
-                $line ~~ s:global/\t/        /;
-                my @tag = $cur-line == $linenum ?? ['<strong class="match">', '</strong>']
-                                                !! ['', ''];
-                $code ~= sprintf "%s%5d: %s%s\n", @tag[0], $cur-line, encode-html($line), @tag[1];
-            };
+            (my $l = $line) ~~ s:global/\t/        /;
+            my @tag = $cur-line == $linenum ?? ['<strong class="match">', '</strong>']
+                                            !! ['', ''];
+            $code ~= sprintf "%s%5d: %s%s\n", @tag[0], $cur-line, encode-html($l), @tag[1];
         }
         $fh.close;
     }
