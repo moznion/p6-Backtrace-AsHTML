@@ -139,15 +139,37 @@ my sub encode-html(Str $str) {
 
 =head1 NAME
 
-Backtrace::AsHTML - blah blah blah
+Backtrace::AsHTML - Displays back trace in HTML
 
 =head1 SYNOPSIS
 
   use Backtrace::AsHTML;
 
+  my $trace = Backtrace.new;
+  my $html  = $trace.as-html;
+
 =head1 DESCRIPTION
 
-Backtrace::AsHTML is ...
+Backtrace::AsHTML adds C<as-html> method to L<Backtrace> which displays the back trace
+in beautiful HTML, with code snippet context.
+
+<img src="https://i.gyazo.com/6ac7f82ef6fb0a05d7de9a11dbdcaa0b.png">
+
+This library is inspired by L<Devel::StackTrace::AsHTML of perl5|https://metacpan.org/release/Devel-StackTrace-AsHTML> and much of code is taken from that.
+
+=head1 METHODS
+
+=item C<as-html>
+
+C<as-html> shows the fully back trace in HTML.
+
+This method will be added into L<Backtrace> class automatically when used this.
+
+=head1 TODO
+
+=item show lexical variables for each frames (How?)
+
+=item show arguments for each frames? (How??)
 
 =head1 AUTHOR
 
@@ -155,8 +177,14 @@ moznion <moznion@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2015 moznion
+    Copyright 2015 moznion
 
-This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
+    This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
+
+And license of the original perl5's Devel::StackTrace::AsHTML is
+
+    This library is free software; you can redistribute it and/or modify
+    it under the same terms as Perl itself.
 
 =end pod
+
