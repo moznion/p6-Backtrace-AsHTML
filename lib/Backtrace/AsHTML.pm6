@@ -119,6 +119,14 @@ my sub build-context(Backtrace::Frame $frame) returns Str {
                                             !! ['', ''];
             $code ~= sprintf "%s%5d: %s%s\n", @tag[0], $cur-line, encode-html($l), @tag[1];
         }
+
+        CATCH {
+            default {
+                # probably read bin file...
+                $code = '';
+            }
+        }
+
         $fh.close;
     }
 
