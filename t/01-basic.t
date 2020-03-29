@@ -3,7 +3,7 @@ use lib 'lib';
 use Test;
 use Backtrace::AsHTML;
 
-plan 4;
+plan 3;
 
 my $html;
 
